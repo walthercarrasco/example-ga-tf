@@ -1,0 +1,22 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Instalar Nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Copiar el archivo index.html al servidor web
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Iniciar y habilitar el servicio Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
