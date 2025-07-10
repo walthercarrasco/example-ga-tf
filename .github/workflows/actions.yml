@@ -29,3 +29,6 @@ jobs:
       
       - name: Terraform init
         run: cd "$TF_WORKSPACE" && terraform init
+      
+      - name: Terraform apply
+        run: cd "$TF_WORKSPACE" && terraform apply
