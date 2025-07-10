@@ -11,10 +11,12 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TF_WORKSPACE: "terraform"
   CONFIG_DIRECTORY: "./"
-  TF_VAR_sshkey: $SSH_KEY
+  TF_VAR_sshkey: ${{ secrets.SSH_KEY }}
+  COSO: "te pisan microsoft"
 
 jobs:
   build:
+    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,10 +28,10 @@ jobs:
           terraform_version: "1.12.2"
             
       - name: AWS Secrets
-        run: echo "$AWS_SECRET_ACCESS_KEY" && echo "$AWS_ACCESS_KEY_ID"
+        run: echo "$AWS_SECRET_ACCESS_KEY" && echo "$AWS_ACCESS_KEY_ID" && echo "$COSO"
       
       - name: Terraform init
         run: cd "$TF_WORKSPACE" && terraform init
       
       - name: Terraform apply
-        run: cd "$TF_WORKSPACE" && terraform apply
+        run: cd "$TF_WORKSPACE" && terraform apply -auto-approve
